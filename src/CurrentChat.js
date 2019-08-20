@@ -1,12 +1,23 @@
 import React from 'react'
+import MessageForm from './MessageForm'
 
 class CurrentChat extends React.Component {
   render(){
-    console.log(this.props, "CurrentChat")
+
     return(
       <div className="ui grid">
         <h2 className="ui header">CurrentChat:</h2> <br />
-        { null }
+        { this.props.currentChat.title }
+          <ul>
+            {
+
+              this.props.messages.map((message) => {
+                return <li>{message.content}</li>
+              }) 
+
+          }
+          </ul>
+          <MessageForm handleNewMessage={this.props.handleNewMessage}/>
       </div>
     )
   }

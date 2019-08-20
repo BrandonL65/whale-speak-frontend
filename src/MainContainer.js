@@ -9,8 +9,8 @@ class MainContainer extends React.Component {
   state = {
     whales: [],
     chatrooms: [],
-    messages: [],
-    currentChat: ""
+    currentChatMessages: [],
+    currentChat: [],
   }
 
   componentDidMount() {
@@ -22,28 +22,21 @@ class MainContainer extends React.Component {
       })
     })
 
-
     fetch('http://localhost:3000/chatrooms')
     .then(res => res.json())
     .then(chatroomData => {
       this.setState({
-        chatrooms: chatroomData
+        chatrooms: chatroomData, currentChat: chatroomData[0]
       })
     })
-
-    fetch('http://localhost:3000/messages')
-    .then(res => res.json())
-    .then(messagesData => {
-      this.setState({
-        messages: messagesData
-      })
-    })
-
-
   }
 
   handleClick = (chatroomObj) => {
-    this.setState({ currentChat: chatroomObj.chatroom.id })
+    this.setState({ currentChat: chatroomObj.chatroom, currentChatMessages: chatroomObj.messages })
+  }
+
+  handleNewMessage = (e) => {
+    console.log(e.target.value)
   }
 
   render(){
@@ -51,10 +44,11 @@ class MainContainer extends React.Component {
       <div>
         <Header />
         <hr />
-        <br /><ChatroomList chatrooms={this.state.chatrooms} handleClick={this.handleClick}/>
+        <br />
+        <ChatroomList chatrooms={this.state.chatrooms} handleClick={this.handleClick}/>
         <hr />
         <br />
-        <CurrentChat currentChat={this.state.currentChat}/>
+        <CurrentChat currentChat={this.state.currentChat} messages={this.state.currentChatMessages} handleNewMessage={this.handleNewMessage}/>
         <hr />
         <br />
         <WhalesList whales={this.state.whales}/>

@@ -1,5 +1,4 @@
 import React from 'react'
-import CurrentChat from './CurrentChat'
 import Chatroom from './components/Chatroom'
 
 class ChatroomList extends React.Component {
