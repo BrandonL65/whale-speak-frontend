@@ -1,4 +1,5 @@
 import React from 'react'
+import { List } from 'semantic-ui-react'
 import Chatroom from './components/Chatroom'
 
 class ChatroomList extends React.Component {
@@ -10,7 +11,11 @@ class ChatroomList extends React.Component {
       return(
         <div className="ui grid">
           <h2 className="ui header">Lists of Chatrooms:</h2> <br />
-          { chatroom }
+          <List>
+            <List.Item>
+              <List.Content>{ chatroom }</List.Content>
+            </List.Item>
+          </List>
         </div>
       )
   }
