@@ -10,7 +10,8 @@ class MainContainer extends React.Component {
     whales: [],
     chatrooms: [],
     currentChatMessages: [],
-    currentChat: [],
+    initialMessages: [],
+    currentChat: []
   }
 
   componentDidMount() {
@@ -48,7 +49,7 @@ class MainContainer extends React.Component {
         <ChatroomList chatrooms={this.state.chatrooms} handleClick={this.handleClick}/>
         <hr />
         <br />
-        <CurrentChat currentChat={this.state.currentChat} messages={this.state.currentChatMessages} handleNewMessage={this.handleNewMessage}/>
+        <CurrentChat currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage}/>
         <hr />
         <br />
         <WhalesList whales={this.state.whales}/>
