@@ -3,7 +3,6 @@ import MessageForm from './MessageForm'
 
 class CurrentChat extends React.Component {
   render(){
-
     return(
       <div className="ui grid">
         <h2 className="ui header">CurrentChat:</h2> <br />
@@ -11,8 +10,8 @@ class CurrentChat extends React.Component {
           <ul>
             {
 
-              this.props.messages.map((message) => {
-                return <li>{message.content}</li>
+              this.props.actualMessages.map((message) => {
+                return <li key = {message.id}> {message.whale.name}: {message.content}  </li>
               }) 
 
           }

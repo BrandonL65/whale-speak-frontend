@@ -9,30 +9,55 @@ class MainContainer extends React.Component {
   state = {
     whales: [],
     chatrooms: [],
-    currentChatMessages: [],
+    messages: [],
     currentChat: [],
+    actualAllMessages: []
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/whales')
+
+    fetch('http://localhost:3000/whales')     //Populate Whales
     .then(res => res.json())
     .then(whaleData => {
       this.setState({
         whales: whaleData
       })
     })
-
-    fetch('http://localhost:3000/chatrooms')
+    fetch('http://localhost:3000/chatrooms')        //Populate Chatrooms 
     .then(res => res.json())
     .then(chatroomData => {
       this.setState({
-        chatrooms: chatroomData, currentChat: chatroomData[0]
+        chatrooms: chatroomData, currentChat: chatroomData[0] 
+      })
+    })
+    fetch('http://localhost:3000/messages')
+    .then(resp => resp.json())
+    .then((data) => {
+      let all = [];                     //Populate Refresh Page with League messages 
+      for (let i=0; i < data.length; i++) {
+        if (data[i].chatroom.title == "League") {
+          all.push(data[i])
+        }
+      }
+      this.setState ({                //Sets populates Messages AND ActualAllMessages 
+        ...this.state,
+        messages: data,
+        actualAllMessages: all 
       })
     })
   }
 
   handleClick = (chatroomObj) => {
-    this.setState({ currentChat: chatroomObj.chatroom, currentChatMessages: chatroomObj.messages })
+    let all = [];
+    let allMessages = this.state.messages 
+    for (let i=0; i < allMessages.length; i++) {
+      if (allMessages[i].chatroom.title == chatroomObj.chatroom.title)
+      {
+        all.push(allMessages[i])
+      }
+    }
+    this.setState({ currentChat: chatroomObj.chatroom, actualAllMessages: all })
+
   }
 
   handleNewMessage = (e) => {
@@ -45,10 +70,11 @@ class MainContainer extends React.Component {
         <Header />
         <hr />
         <br />
-        <ChatroomList chatrooms={this.state.chatrooms} handleClick={this.handleClick}/>
+          <ChatroomList chatrooms={this.state.chatrooms} handleClick={this.handleClick}/>
+
         <hr />
         <br />
-        <CurrentChat currentChat={this.state.currentChat} messages={this.state.currentChatMessages} handleNewMessage={this.handleNewMessage}/>
+        <CurrentChat currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
         <hr />
         <br />
         <WhalesList whales={this.state.whales}/>
