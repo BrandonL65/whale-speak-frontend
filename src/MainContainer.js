@@ -74,7 +74,7 @@ class MainContainer extends React.Component {
 
         <hr />
         <br />
-        <CurrentChat currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
+        <CurrentChat whales = {this.state.whales} currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
         <hr />
         <br />
         <WhalesList whales={this.state.whales}/>

@@ -2,6 +2,7 @@ import React from 'react'
 import MessageForm from './MessageForm'
 
 class CurrentChat extends React.Component {
+
   render(){
     return(
       <div className="ui grid">
@@ -16,7 +17,7 @@ class CurrentChat extends React.Component {
 
           }
           </ul>
-          <MessageForm handleNewMessage={this.props.handleNewMessage}/>
+          <MessageForm reload = {this.reload} whales = {this.props.whales} currentChat = {this.props.currentChat} handleNewMessage={this.props.handleNewMessage}/>
       </div>
     )
   }
