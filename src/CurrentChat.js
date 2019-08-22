@@ -3,17 +3,14 @@ import MessageForm from './MessageForm'
 
 class CurrentChat extends React.Component {
 
-  state =
+  constructor(props) 
   {
-    load: false
+    super(props)
+    console.log(this.props)
   }
-  reloadAll = () =>
-  {
-    this.setState(prevState => ({
-      load: !prevState.load
-    }))
-  }
+
   render(){
+
     return(
       <div className="ui grid">
         <h2 className="ui header">CurrentChat:</h2> <br />
@@ -27,7 +24,7 @@ class CurrentChat extends React.Component {
 
           }
           </ul>
-          <MessageForm reloadAll = {this.reloadAll} reload = {this.reload} whales = {this.props.whales} currentChat = {this.props.currentChat} handleNewMessage={this.props.handleNewMessage}/>
+          <MessageForm whales = {this.props.whales} currentChat = {this.props.currentChat} handleNewMessage={this.props.handleNewMessage}/>
       </div>
     )
   }

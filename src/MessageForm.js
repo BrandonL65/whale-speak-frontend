@@ -11,19 +11,23 @@ class MessageForm extends React.Component {
   handleClick = (e) => 
   {
     e.preventDefault();
-    let firstWhale = this.props.whales[0];
-    fetch(`http://localhost:3000/messages`, 
-    {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify ({
-        content: `${this.state.message}`,
-        whale_id: `${firstWhale.id}`,
-        chatroom_id: `${this.props.currentChat.id}`
-      })
-    })
-    .then( resp => resp.json())
-    .then((data) => this.props.reloadAll());
+    debugger;
+    // let firstWhale = this.props.whales[0];
+    // fetch(`http://localhost:3000/messages`, 
+    // {
+    //   method: "POST",
+    //   headers: {"Content-Type": "application/json"},
+    //   body: JSON.stringify ({
+    //     content: `${this.state.message}`,
+    //     whale_id: `${firstWhale.id}`,
+    //     chatroom_id: `${this.props.currentChat.id}`
+    //   })
+    // })
+    // .then( resp => resp.json())
+    // .then(function(data) {
+    //   fn(data)
+    // });
+
   }
   render(){
     return(
