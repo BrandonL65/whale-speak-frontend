@@ -9,31 +9,60 @@ class MainContainer extends React.Component {
   state = {
     whales: [],
     chatrooms: [],
-    currentChatMessages: [],
-    initialMessages: [],
-    currentChat: []
+    messages: [],
+    currentChat: [],
+    actualAllMessages: []
+  }
+
+  start = () =>
+  {
+    this.componentDidMount();
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/whales')
+
+    fetch('http://localhost:3000/whales')     //Populate Whales
     .then(res => res.json())
     .then(whaleData => {
       this.setState({
         whales: whaleData
       })
     })
-
-    fetch('http://localhost:3000/chatrooms')
+    fetch('http://localhost:3000/chatrooms')        //Populate Chatrooms
     .then(res => res.json())
     .then(chatroomData => {
       this.setState({
         chatrooms: chatroomData, currentChat: chatroomData[0]
       })
     })
+    fetch('http://localhost:3000/messages')
+    .then(resp => resp.json())
+    .then((data) => {
+      let all = [];                     //Populate Refresh Page with League messages
+      for (let i=0; i < data.length; i++) {
+        if (data[i].chatroom.title == "League") {
+          all.push(data[i])
+        }
+      }
+      this.setState ({                //Sets populates Messages AND ActualAllMessages
+        ...this.state,
+        messages: data,
+        actualAllMessages: all
+      })
+    })
   }
 
   handleClick = (chatroomObj) => {
-    this.setState({ currentChat: chatroomObj.chatroom, currentChatMessages: chatroomObj.messages })
+    let all = [];
+    let allMessages = this.state.messages
+    for (let i=0; i < allMessages.length; i++) {
+      if (allMessages[i].chatroom.title == chatroomObj.chatroom.title)
+      {
+        all.push(allMessages[i])
+      }
+    }
+    this.setState({ currentChat: chatroomObj.chatroom, actualAllMessages: all })
+
   }
 
   handleNewMessage = (e) => {
@@ -54,7 +83,7 @@ class MainContainer extends React.Component {
           </div>
           <div className="eight wide column">
             <div className="ui segment">
-              <CurrentChat currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage}/>
+              <CurrentChat  whales = {this.state.whales} currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
             </div>
           </div>
           <div className="column">

@@ -23,3 +23,4 @@ class Chatroom extends React.Component {
 }
 
 export default Chatroom
+// this.props.handleClick(this.props)

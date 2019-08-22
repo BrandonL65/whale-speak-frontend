@@ -2,26 +2,32 @@ import React from 'react'
 import MessageForm from './MessageForm'
 
 class CurrentChat extends React.Component {
-  render(){
-    const renderMessages = () => {
-      if (this.props.messages.length !== 0) {
-        return this.props.messages.map(message => {
-          return <div>{message.content}</div>
-        })
-      } else {
-        return <div>Start Chatting!</div>
-      }
-    }
 
+  state =
+  {
+    load: false
+  }
+  reloadAll = () =>
+  {
+    this.setState(prevState => ({
+      load: !prevState.load
+    }))
+  }
+  render(){
     return(
-      <div>
-        <h3 class="ui top attached header">
-          { this.props.currentChat.title }
-        </h3>
-        <div class="ui attached segment">
-          <p>{ renderMessages }</p>
-          <p><MessageForm handleNewMessage={this.props.handleNewMessage} /></p>
-        </div>
+      <div className="ui grid">
+        <h2 className="ui header">CurrentChat:</h2> <br />
+        { this.props.currentChat.title }
+          <ul>
+            {
+
+              this.props.actualMessages.map((message) => {
+                return <li key = {message.id}> {message.whale.name}: {message.content}  </li>
+              })
+
+          }
+          </ul>
+          <MessageForm reloadAll = {this.reloadAll} reload = {this.reload} whales = {this.props.whales} currentChat = {this.props.currentChat} handleNewMessage={this.props.handleNewMessage}/>
       </div>
     )
   }
