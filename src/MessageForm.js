@@ -12,7 +12,6 @@ class MessageForm extends React.Component {
   {
     e.preventDefault();
     let firstWhale = this.props.whales[0];
-    console.log(firstWhale);
     fetch(`http://localhost:3000/messages`, 
     {
       method: "POST",
@@ -24,7 +23,7 @@ class MessageForm extends React.Component {
       })
     })
     .then( resp => resp.json())
-    .then(data => console.log(data));
+    .then((data) => this.props.reloadAll());
   }
   render(){
     return(

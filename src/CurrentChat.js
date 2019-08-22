@@ -3,6 +3,16 @@ import MessageForm from './MessageForm'
 
 class CurrentChat extends React.Component {
 
+  state = 
+  {
+    load: false 
+  }
+  reloadAll = () => 
+  {
+    this.setState(prevState => ({
+      load: !prevState.load 
+    }))
+  }
   render(){
     return(
       <div className="ui grid">
@@ -17,7 +27,7 @@ class CurrentChat extends React.Component {
 
           }
           </ul>
-          <MessageForm reload = {this.reload} whales = {this.props.whales} currentChat = {this.props.currentChat} handleNewMessage={this.props.handleNewMessage}/>
+          <MessageForm reloadAll = {this.reloadAll} reload = {this.reload} whales = {this.props.whales} currentChat = {this.props.currentChat} handleNewMessage={this.props.handleNewMessage}/>
       </div>
     )
   }

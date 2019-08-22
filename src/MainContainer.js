@@ -14,6 +14,11 @@ class MainContainer extends React.Component {
     actualAllMessages: []
   }
 
+  start = () => 
+  {
+    this.componentDidMount();
+  }
+
   componentDidMount() {
 
     fetch('http://localhost:3000/whales')     //Populate Whales
@@ -74,7 +79,7 @@ class MainContainer extends React.Component {
 
         <hr />
         <br />
-        <CurrentChat whales = {this.state.whales} currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
+        <CurrentChat  whales = {this.state.whales} currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
         <hr />
         <br />
         <WhalesList whales={this.state.whales}/>
