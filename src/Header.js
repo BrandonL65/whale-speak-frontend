@@ -4,9 +4,13 @@ class Header extends React.Component {
   render(){
     return(
       <div>
-        <span>
-          <h1 className="ui header">WhaleSpeak!<i className="comment alternate icon" /></h1>
-        </span>
+      <h2 class="ui header">
+        <i class="comment alternate icon"></i>
+        <div class="content">
+          WhaleSpeak!
+          <div class="sub header">Speak with the whales!</div>
+        </div>
+      </h2>
       </div>
     )
   }

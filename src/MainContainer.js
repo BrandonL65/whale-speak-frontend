@@ -42,21 +42,23 @@ class MainContainer extends React.Component {
 
   render(){
     return(
-      <div>
+      <div className="ui equal width center aligned padded grid">
+        <div className="sixteen wide column">
           <Header />
-        <div class="ui equal width grid">
-          <div class="column">
-            <div class="ui segment">
-              <ChatroomList chatrooms={this.state.chatrooms} handleClick={this.handleClick}/>
+        </div>
+        <div className="ui equal width grid">
+          <div className="column">
+            <div className="ui segment">
+              <ChatroomList chatrooms={this.state.chatrooms} handleClick={this.handleClick} currentChat={this.state.currentChat}/>
             </div>
           </div>
-          <div class="eight wide column">
-            <div class="ui segment">
+          <div className="eight wide column">
+            <div className="ui segment">
               <CurrentChat currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage}/>
             </div>
           </div>
-          <div class="column">
-            <div class="ui segment">
+          <div className="column">
+            <div className="ui segment">
               <WhalesList whales={this.state.whales}/>
             </div>
           </div>

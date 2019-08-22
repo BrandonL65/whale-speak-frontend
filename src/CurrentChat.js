@@ -14,11 +14,14 @@ class CurrentChat extends React.Component {
     }
 
     return(
-      <div className="ui grid">
-        <h2 className="ui header">CurrentChat:</h2> <br />
-        { this.props.currentChat.title }
-        { renderMessages }
-          <MessageForm handleNewMessage={this.props.handleNewMessage}/>
+      <div>
+        <h3 class="ui top attached header">
+          { this.props.currentChat.title }
+        </h3>
+        <div class="ui attached segment">
+          <p>{ renderMessages }</p>
+          <p><MessageForm handleNewMessage={this.props.handleNewMessage} /></p>
+        </div>
       </div>
     )
   }
