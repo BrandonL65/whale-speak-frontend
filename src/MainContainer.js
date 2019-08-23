@@ -12,28 +12,27 @@ class MainContainer extends React.Component {
     messages: [],
     currentChat: [],
     actualAllMessages: [],
-    load: true
+    switchedChat: ""
   }
 
-  start = () =>
-  {
-    this.componentDidMount();
-  }
-
-  componentDidMount() {
+  componentDidMount =()  => {
 
     fetch('http://localhost:3000/whales')     //Populate Whales
     .then(res => res.json())
     .then(whaleData => {
       this.setState({
+        ...this.state,
         whales: whaleData
       })
     })
+
     fetch('http://localhost:3000/chatrooms')        //Populate Chatrooms
     .then(res => res.json())
     .then(chatroomData => {
       this.setState({
-        chatrooms: chatroomData, currentChat: chatroomData[0]
+        ...this.state,
+        chatrooms: chatroomData, 
+        currentChat: chatroomData[0]
       })
     })
     fetch('http://localhost:3000/messages')
@@ -65,27 +64,13 @@ class MainContainer extends React.Component {
     this.setState({ currentChat: chatroomObj.chatroom, actualAllMessages: all })
 
   }
-  handleLoad = () =>
-  {
-    // let current = this.state.load
-    // if (current === true) {
-    //   current = false;
-    // }
-    // else if (current === false) {
-    //   current = true ;
-    // }
-    // this.setState({
-    //   ...this.state,
-    //   load: current
-    // })
-    this.forceUpdate();
-  }
+
   handleNewMessage = (e) => {
     console.log(e.target.value)
   }
 
   handleWhaleUpdate = (e) => {
-    console.log(e.target.value)
+    console.log(e)
   }
 
   render(){
@@ -102,7 +87,7 @@ class MainContainer extends React.Component {
           </div>
           <div className="eight wide column">
             <div className="ui segment">
-              <CurrentChat  handleLoad = {this.handleLoad} whales = {this.state.whales} currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
+              <CurrentChat  handleLoad = {this.componentDidMount} whales = {this.state.whales} currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
             </div>
           </div>
           <div className="column">

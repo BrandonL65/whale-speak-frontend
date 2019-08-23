@@ -24,7 +24,7 @@ class MessageForm extends React.Component {
       })
     })
     .then( resp => resp.json())
-    .then( (data) => handle())
+    .then( (data) => this.props.handleLoad())
   };
   render(){
     return(
