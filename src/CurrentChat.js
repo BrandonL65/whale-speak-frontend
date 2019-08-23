@@ -3,7 +3,7 @@ import MessageForm from './MessageForm'
 
 class CurrentChat extends React.Component {
 
-  constructor(props) 
+  constructor(props)
   {
     super(props)
     console.log(this.props)
@@ -24,7 +24,7 @@ class CurrentChat extends React.Component {
 
           }
           </ul>
-          <MessageForm whales = {this.props.whales} currentChat = {this.props.currentChat} handleNewMessage={this.props.handleNewMessage}/>
+          <MessageForm handleLoad = {this.props.handleLoad} whales = {this.props.whales} currentChat = {this.props.currentChat} handleNewMessage={this.props.handleNewMessage}/>
       </div>
     )
   }

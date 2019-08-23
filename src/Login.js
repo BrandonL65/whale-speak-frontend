@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import App from './App'
 
 class Login extends React.Component {
@@ -7,7 +7,7 @@ class Login extends React.Component {
     allWhales: [],
     name: "",
     pass: "",
-    LoginOrApp: 0 
+    LoginOrApp: 0
   }
 
   componentDidMount() {
@@ -20,52 +20,52 @@ class Login extends React.Component {
       })
     })
   }
-  handleUser = (e) => 
+  handleUser = (e) =>
   {
-    this.setState({ 
+    this.setState({
       ...this.state,
       name: e.target.value})
   }
-  handlePass = (e) => 
+  handlePass = (e) =>
   {
     this.setState({pass: e.target.value })
   }
 
-  handleSubmit = (e) => 
+  handleSubmit = (e) =>
   {
     e.preventDefault();
 
     for (let i=0; i < this.state.allWhales.length; i++) {
-      if (this.state.name == this.state.allWhales[i].name) {
+      if (this.state.name === this.state.allWhales[i].name) {
         let val = this.state.LoginOrApp;
-        if (val == 0) {
+        if (val === 0) {
           val = 1;
         }
-        else if (val == 1) {
+        else if (val === 1) {
           val = 0;
         }
         this.setState({
           ...this.state,
-          LoginOrApp: val 
+          LoginOrApp: val
         })
       }
     }
 
     // let val = this.state.LoginOrApp;
-    // if (val == 0) {
+    // if (val === 0) {
     //   val = 1;
     // }
-    // else if (val == 1) {
+    // else if (val === 1) {
     //   val = 0;
     // }
     // this.setState({
     //   ...this.state,
-    //   LoginOrApp: val 
+    //   LoginOrApp: val
     // })
   }
-  whichToRender = () => 
+  whichToRender = () =>
   {
-    if (this.state.LoginOrApp == 0)
+    if (this.state.LoginOrApp === 0)
     {
       return(
         <div>
@@ -85,27 +85,24 @@ class Login extends React.Component {
                   placeholder='Password'
                   type='password'
                 />
-  
+
                 <Button onClick = {this.handleSubmit} color='blue' fluid size='large'>
                   Login
                 </Button>
               </Segment>
             </Form>
-            <Message>
-              New to us? <a href='#'>Sign Up</a>
-            </Message>
           </Grid.Column>
         </Grid>
         </div>
       )
     }
-    else 
+    else
     {
       return(< App />)
     }
   }
   render() {
-    console.log(this.state)
+
     return(
       <div>
         {this.whichToRender()}

@@ -11,7 +11,8 @@ class MainContainer extends React.Component {
     chatrooms: [],
     messages: [],
     currentChat: [],
-    actualAllMessages: []
+    actualAllMessages: [],
+    load: true
   }
 
   start = () =>
@@ -40,7 +41,7 @@ class MainContainer extends React.Component {
     .then((data) => {
       let all = [];                     //Populate Refresh Page with League messages
       for (let i=0; i < data.length; i++) {
-        if (data[i].chatroom.title == "League") {
+        if (data[i].chatroom.title === "League") {
           all.push(data[i])
         }
       }
@@ -56,7 +57,7 @@ class MainContainer extends React.Component {
     let all = [];
     let allMessages = this.state.messages
     for (let i=0; i < allMessages.length; i++) {
-      if (allMessages[i].chatroom.title == chatroomObj.chatroom.title)
+      if (allMessages[i].chatroom.title === chatroomObj.chatroom.title)
       {
         all.push(allMessages[i])
       }
@@ -64,8 +65,26 @@ class MainContainer extends React.Component {
     this.setState({ currentChat: chatroomObj.chatroom, actualAllMessages: all })
 
   }
-
+  handleLoad = () =>
+  {
+    // let current = this.state.load
+    // if (current === true) {
+    //   current = false;
+    // }
+    // else if (current === false) {
+    //   current = true ;
+    // }
+    // this.setState({
+    //   ...this.state,
+    //   load: current
+    // })
+    this.forceUpdate();
+  }
   handleNewMessage = (e) => {
+    console.log(e.target.value)
+  }
+
+  handleWhaleUpdate = (e) => {
     console.log(e.target.value)
   }
 
@@ -83,12 +102,12 @@ class MainContainer extends React.Component {
           </div>
           <div className="eight wide column">
             <div className="ui segment">
-              <CurrentChat  whales = {this.state.whales} currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
+              <CurrentChat  handleLoad = {this.handleLoad} whales = {this.state.whales} currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
             </div>
           </div>
           <div className="column">
             <div className="ui segment">
-              <WhalesList whales={this.state.whales}/>
+              <WhalesList whales={this.state.whales} handleWhaleUpdate={this.handleWhaleUpdate} handleBioChange={this.handleBioChange}/>
             </div>
           </div>
         </div>

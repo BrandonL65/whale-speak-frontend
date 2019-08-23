@@ -2,33 +2,30 @@ import React from 'react'
 
 class MessageForm extends React.Component {
 
-  handleNewMessage = (e) => 
+  handleNewMessage = (e) =>
   {
     this.setState ({
       message: e.target.value
     })
   }
-  handleClick = (e) => 
+  handleClick = (e) =>
   {
+    let handle = this.props.handleLoad;
     e.preventDefault();
-    debugger;
-    // let firstWhale = this.props.whales[0];
-    // fetch(`http://localhost:3000/messages`, 
-    // {
-    //   method: "POST",
-    //   headers: {"Content-Type": "application/json"},
-    //   body: JSON.stringify ({
-    //     content: `${this.state.message}`,
-    //     whale_id: `${firstWhale.id}`,
-    //     chatroom_id: `${this.props.currentChat.id}`
-    //   })
-    // })
-    // .then( resp => resp.json())
-    // .then(function(data) {
-    //   fn(data)
-    // });
-
-  }
+    let firstWhale = this.props.whales[0];
+    fetch(`http://localhost:3000/messages`,
+    {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify ({
+        content: `${this.state.message}`,
+        whale_id: `${firstWhale.id}`,
+        chatroom_id: `${this.props.currentChat.id}`
+      })
+    })
+    .then( resp => resp.json())
+    .then( (data) => handle())
+  };
   render(){
     return(
       <div>
