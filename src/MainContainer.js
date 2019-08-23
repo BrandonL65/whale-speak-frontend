@@ -9,50 +9,108 @@ class MainContainer extends React.Component {
   state = {
     whales: [],
     chatrooms: [],
-    currentChatMessages: [],
-    initialMessages: [],
-    currentChat: []
+    messages: [],
+    currentChat: [],
+    actualAllMessages: [],
+    load: true
+  }
+
+  start = () =>
+  {
+    this.componentDidMount();
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/whales')
+
+    fetch('http://localhost:3000/whales')     //Populate Whales
     .then(res => res.json())
     .then(whaleData => {
       this.setState({
         whales: whaleData
       })
     })
-
-    fetch('http://localhost:3000/chatrooms')
+    fetch('http://localhost:3000/chatrooms')        //Populate Chatrooms
     .then(res => res.json())
     .then(chatroomData => {
       this.setState({
         chatrooms: chatroomData, currentChat: chatroomData[0]
       })
     })
+    fetch('http://localhost:3000/messages')
+    .then(resp => resp.json())
+    .then((data) => {
+      let all = [];                     //Populate Refresh Page with League messages
+      for (let i=0; i < data.length; i++) {
+        if (data[i].chatroom.title === "League") {
+          all.push(data[i])
+        }
+      }
+      this.setState ({                //Sets populates Messages AND ActualAllMessages
+        ...this.state,
+        messages: data,
+        actualAllMessages: all
+      })
+    })
   }
 
   handleClick = (chatroomObj) => {
-    this.setState({ currentChat: chatroomObj.chatroom, currentChatMessages: chatroomObj.messages })
+    let all = [];
+    let allMessages = this.state.messages
+    for (let i=0; i < allMessages.length; i++) {
+      if (allMessages[i].chatroom.title === chatroomObj.chatroom.title)
+      {
+        all.push(allMessages[i])
+      }
+    }
+    this.setState({ currentChat: chatroomObj.chatroom, actualAllMessages: all })
+
+  }
+  handleLoad = () =>
+  {
+    // let current = this.state.load
+    // if (current === true) {
+    //   current = false;
+    // }
+    // else if (current === false) {
+    //   current = true ;
+    // }
+    // this.setState({
+    //   ...this.state,
+    //   load: current
+    // })
+    this.forceUpdate();
+  }
+  handleNewMessage = (e) => {
+    console.log(e.target.value)
   }
 
-  handleNewMessage = (e) => {
+  handleWhaleUpdate = (e) => {
     console.log(e.target.value)
   }
 
   render(){
     return(
-      <div>
-        <Header />
-        <hr />
-        <br />
-        <ChatroomList chatrooms={this.state.chatrooms} handleClick={this.handleClick}/>
-        <hr />
-        <br />
-        <CurrentChat currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage}/>
-        <hr />
-        <br />
-        <WhalesList whales={this.state.whales}/>
+      <div className="ui equal width center aligned padded grid">
+        <div className="sixteen wide column">
+          <Header />
+        </div>
+        <div className="ui equal width grid">
+          <div className="column">
+            <div className="ui segment">
+              <ChatroomList chatrooms={this.state.chatrooms} handleClick={this.handleClick} currentChat={this.state.currentChat}/>
+            </div>
+          </div>
+          <div className="eight wide column">
+            <div className="ui segment">
+              <CurrentChat  handleLoad = {this.handleLoad} whales = {this.state.whales} currentChat={this.state.currentChat} handleNewMessage={this.handleNewMessage} actualMessages = {this.state.actualAllMessages}/>
+            </div>
+          </div>
+          <div className="column">
+            <div className="ui segment">
+              <WhalesList whales={this.state.whales} handleWhaleUpdate={this.handleWhaleUpdate} handleBioChange={this.handleBioChange}/>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
